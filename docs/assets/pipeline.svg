@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640" role="img" aria-label="Build pipeline: parallel stages produce the image, which must pass smoke tests and a vulnerability gate before publishing">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#131d36"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#94a3b8"/>
+    </marker>
+    <style>
+      .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .title { font-size: 18px; font-weight: 700; fill: #f8fafc; }
+      .text { font-size: 14px; fill: #cbd5e1; }
+      .tag { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; }
+      .link { fill: none; stroke: #94a3b8; stroke-width: 2; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1280" height="640" rx="22" fill="url(#bg)"/>
+  <text x="56" y="60" class="sans" font-size="30" font-weight="700" fill="#f8fafc">From pinned sources to a verified image</text>
+  <text x="56" y="90" class="sans" font-size="16" fill="#94a3b8">Heavy stages run natively and in parallel, with cache mounts. Nothing is published until it passes.</text>
+
+  <g class="sans">
+    <text x="56" y="134" class="tag" fill="#5eead4">NATIVE ON THE BUILD HOST</text>
+
+    <rect x="56" y="146" width="370" height="100" rx="12" fill="#134e4a" fill-opacity="0.55" stroke="#2dd4bf" stroke-opacity="0.7"/>
+    <text x="78" y="178" class="title">Fetch</text>
+    <text x="78" y="204" class="text">Downloads in parallel. Every file is checked</text>
+    <text x="78" y="226" class="text">against a pinned checksum in tools.lock.</text>
+
+    <rect x="56" y="258" width="370" height="100" rx="12" fill="#134e4a" fill-opacity="0.55" stroke="#2dd4bf" stroke-opacity="0.7"/>
+    <text x="78" y="290" class="title">Go tools</text>
+    <text x="78" y="316" class="text">Cross-compiles 14 tools from pinned commits</text>
+    <text x="78" y="338" class="text">with current Go and patched dependencies.</text>
+
+    <text x="56" y="396" class="tag" fill="#a5b4fc">LINUX/AMD64</text>
+
+    <rect x="56" y="408" width="370" height="60" rx="12" fill="#312e81" fill-opacity="0.55" stroke="#818cf8" stroke-opacity="0.7"/>
+    <text x="78" y="444" class="title">System</text>
+    <text x="172" y="444" class="text">apt, without docs or extra locales</text>
+
+    <rect x="56" y="478" width="370" height="60" rx="12" fill="#312e81" fill-opacity="0.55" stroke="#818cf8" stroke-opacity="0.7"/>
+    <text x="78" y="514" class="title">Python</text>
+    <text x="172" y="514" class="text">Four versions, trimmed, private venv</text>
+
+    <rect x="56" y="548" width="370" height="60" rx="12" fill="#312e81" fill-opacity="0.55" stroke="#818cf8" stroke-opacity="0.7"/>
+    <text x="78" y="584" class="title">rsync</text>
+    <text x="172" y="584" class="text">Compiled from the latest release</text>
+
+    <path class="link" d="M426 196H470C488 196 488 196 488 300V340H504"/>
+    <path class="link" d="M426 308H470C482 308 488 316 488 340H504"/>
+    <path class="link" d="M426 438H470C482 438 488 420 488 380H504"/>
+    <path class="link" d="M426 508H470C484 508 488 480 488 390V380H504"/>
+    <path class="link" d="M426 578H470C486 578 488 540 488 400V380H504"/>
+
+    <rect x="506" y="276" width="190" height="136" rx="14" fill="#0f172a" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="601" y="326" class="title" text-anchor="middle">toolbox</text>
+    <text x="601" y="354" class="text" text-anchor="middle">Independent layers</text>
+    <text x="601" y="376" class="mono" style="font-size:13px" fill="#94a3b8" text-anchor="middle">COPY --link</text>
+
+    <path class="link" d="M696 344H752"/>
+
+    <text x="756" y="134" class="tag" fill="#fde68a">THE IMAGE MUST PASS</text>
+
+    <rect x="756" y="146" width="468" height="140" rx="12" fill="#422006" fill-opacity="0.4" stroke="#fbbf24" stroke-opacity="0.75"/>
+    <text x="778" y="178" class="title">Smoke tests</text>
+    <text x="778" y="204" class="text">90 self-checks as an arbitrary UID, on a read-only root</text>
+    <text x="778" y="226" class="text">filesystem, with no capabilities. Browser terminal over a</text>
+    <text x="778" y="248" class="text">real WebSocket. A derived image with its own Python, CA</text>
+    <text x="778" y="270" class="text">certificate and packages.</text>
+
+    <path class="link" d="M990 286V316"/>
+
+    <rect x="756" y="318" width="468" height="118" rx="12" fill="#450a0a" fill-opacity="0.45" stroke="#f87171" stroke-opacity="0.75"/>
+    <text x="778" y="350" class="title">Vulnerability gate</text>
+    <text x="778" y="376" class="text">Trivy and Grype, read together. A finding rated CRITICAL, or</text>
+    <text x="778" y="398" class="text">scored CVSS 9.0 or higher by any source, fails the release,</text>
+    <text x="778" y="420" class="text">whether or not a fix exists.</text>
+
+    <path class="link" d="M990 436V466"/>
+
+    <rect x="756" y="468" width="468" height="96" rx="12" fill="#14532d" fill-opacity="0.5" stroke="#4ade80" stroke-opacity="0.75"/>
+    <text x="778" y="500" class="title">Publish</text>
+    <text x="778" y="526" class="text">Dated tag and latest, with gzip layers and a plain manifest</text>
+    <text x="778" y="548" class="text">that is easy to mirror into your own registry.</text>
+  </g>
+</svg>

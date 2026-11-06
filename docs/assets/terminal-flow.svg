@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 440" width="1280" height="440" role="img" aria-label="Browser terminal architecture: browser, your authenticating proxy, toolbox-terminal on localhost, and one isolated shell per connection">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#131d36"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#94a3b8"/>
+    </marker>
+    <style>
+      .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .title { font-size: 18px; font-weight: 700; fill: #f8fafc; }
+      .text { font-size: 14px; fill: #cbd5e1; }
+      .note { font-size: 13px; font-weight: 600; fill: #94a3b8; }
+      .link { fill: none; stroke: #94a3b8; stroke-width: 2; marker-end: url(#arrow); marker-start: url(#arrow); }
+      .bus { fill: none; stroke: #94a3b8; stroke-width: 2; }
+      .branch { fill: none; stroke: #94a3b8; stroke-width: 2; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1280" height="440" rx="22" fill="url(#bg)"/>
+  <text x="56" y="60" class="sans" font-size="30" font-weight="700" fill="#f8fafc">A shell in the browser, isolated per session</text>
+  <text x="56" y="90" class="sans" font-size="16" fill="#94a3b8">Each connection gets its own shell and private HOME. Close the tab and both are gone.</text>
+
+  <g class="sans">
+    <rect x="56" y="150" width="240" height="170" rx="14" fill="#1e3a8a" fill-opacity="0.5" stroke="#60a5fa" stroke-opacity="0.8"/>
+    <text x="176" y="192" class="title" text-anchor="middle">Browser</text>
+    <text x="176" y="222" class="text" text-anchor="middle">xterm.js 6</text>
+    <text x="176" y="246" class="text" text-anchor="middle">Search, links, Unicode 11</text>
+    <text x="176" y="270" class="text" text-anchor="middle">Served locally, no CDN</text>
+
+    <path class="link" d="M300 235H366"/>
+    <text x="333" y="222" class="note" text-anchor="middle">wss</text>
+
+    <rect x="370" y="150" width="240" height="170" rx="14" fill="#422006" fill-opacity="0.4" stroke="#fbbf24" stroke-width="2" stroke-dasharray="9 7"/>
+    <text x="490" y="192" class="title" text-anchor="middle">Your proxy</text>
+    <text x="490" y="222" class="text" text-anchor="middle">Authentication and TLS</text>
+    <text x="490" y="246" class="text" text-anchor="middle">Nginx, ingress, anything</text>
+    <text x="490" y="282" class="text" text-anchor="middle" style="fill:#fde68a">You provide this</text>
+
+    <path class="link" d="M614 235H680"/>
+    <text x="647" y="222" class="note" text-anchor="middle">local</text>
+
+    <rect x="684" y="150" width="240" height="170" rx="14" fill="#134e4a" fill-opacity="0.55" stroke="#2dd4bf" stroke-opacity="0.8"/>
+    <text x="804" y="192" class="title" text-anchor="middle">toolbox-terminal</text>
+    <text x="804" y="222" class="text" text-anchor="middle">Tornado and Terminado</text>
+    <text x="804" y="246" class="text" text-anchor="middle">127.0.0.1 by default</text>
+    <text x="804" y="270" class="text" text-anchor="middle">Session limit, idle timeout</text>
+
+    <path class="bus" d="M924 235H950M950 167V303"/>
+    <path class="branch" d="M950 167H972"/>
+    <path class="branch" d="M950 235H972"/>
+    <path class="branch" d="M950 303H972"/>
+
+    <g>
+      <rect x="976" y="136" width="248" height="62" rx="11" fill="#312e81" fill-opacity="0.55" stroke="#818cf8" stroke-opacity="0.8"/>
+      <text x="996" y="162" class="title" style="font-size:16px">Shell 1</text>
+      <text x="996" y="184" class="text">private temporary HOME</text>
+
+      <rect x="976" y="204" width="248" height="62" rx="11" fill="#312e81" fill-opacity="0.55" stroke="#818cf8" stroke-opacity="0.8"/>
+      <text x="996" y="230" class="title" style="font-size:16px">Shell 2</text>
+      <text x="996" y="252" class="text">private temporary HOME</text>
+
+      <rect x="976" y="272" width="248" height="62" rx="11" fill="#312e81" fill-opacity="0.55" stroke="#818cf8" stroke-opacity="0.8"/>
+      <text x="996" y="298" class="title" style="font-size:16px">Shell n</text>
+      <text x="996" y="320" class="text">private temporary HOME</text>
+    </g>
+
+    <text x="56" y="388" class="text" style="font-size:15px;fill:#fca5a5;font-weight:600">The terminal has no authentication of its own. Keep the localhost bind and put your own proxy in front.</text>
+  </g>
+</svg>

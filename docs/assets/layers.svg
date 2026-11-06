@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" width="1280" height="760" role="img" aria-label="Image layers from the Ubuntu base up to your own project layers, with their sizes">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#131d36"/>
+    </linearGradient>
+    <style>
+      .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .name { font-size: 19px; font-weight: 700; fill: #f8fafc; }
+      .list { font-size: 15px; fill: #cbd5e1; }
+      .size { font-size: 19px; font-weight: 700; text-anchor: end; }
+      .card { stroke-opacity: 0.7; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="760" rx="22" fill="url(#bg)"/>
+  <text x="60" y="62" class="sans" font-size="30" font-weight="700" fill="#f8fafc">Everything on one FROM line</text>
+  <text x="60" y="92" class="sans" font-size="16" fill="#94a3b8">Each group of tools is its own layer, so updating one leaves the others untouched.</text>
+
+  <g class="sans">
+    <!-- Your layers -->
+    <rect x="60" y="116" width="1160" height="76" rx="12" fill="#422006" fill-opacity="0.35" stroke="#fbbf24" stroke-width="2" stroke-dasharray="9 7"/>
+    <text x="86" y="147" class="name" fill="#fde68a" style="fill:#fde68a">Your project</text>
+    <text x="86" y="172" class="list">Certificates, package mirrors, dependencies and your application: only what makes it yours</text>
+    <text x="1194" y="160" class="size" fill="#fde68a">your layers</text>
+
+    <!-- Runtime -->
+    <rect x="60" y="204" width="1160" height="72" rx="12" fill="#134e4a" fill-opacity="0.55" stroke="#2dd4bf" class="card"/>
+    <text x="86" y="233" class="name">Toolbox runtime</text>
+    <text x="86" y="258" class="list">Entrypoint and hooks, toolbox-doctor, toolbox-python, toolbox-add-ca, browser terminal, xterm.js 6</text>
+    <text x="1194" y="248" class="size" fill="#5eead4">5 MB</text>
+
+    <!-- Source-built -->
+    <rect x="60" y="284" width="1160" height="72" rx="12" fill="#312e81" fill-opacity="0.55" stroke="#818cf8" class="card"/>
+    <text x="86" y="313" class="name">Built from pinned source with Go 1.27.3</text>
+    <text x="86" y="338" class="list mono" style="font-size:14px">oc  kubectl  k9s  stern  kubectx  kubens  kustomize  kubeconform  crane  skopeo  dive  git-lfs  grpcurl  mlr  rclone</text>
+    <text x="1194" y="328" class="size" fill="#a5b4fc">548 MB</text>
+
+    <!-- Release binaries -->
+    <rect x="60" y="364" width="1160" height="72" rx="12" fill="#1e3a8a" fill-opacity="0.5" stroke="#60a5fa" class="card"/>
+    <text x="86" y="393" class="name">Verified release binaries</text>
+    <text x="86" y="418" class="list mono" style="font-size:14px">helm  argocd  oras  cosign  yq  gh  fzf  xh  websocat  duckdb  mongosh  MongoDB tools  uv</text>
+    <text x="1194" y="408" class="size" fill="#93c5fd">1.04 GB</text>
+
+    <!-- Node -->
+    <rect x="60" y="444" width="1160" height="58" rx="12" fill="#14532d" fill-opacity="0.5" stroke="#4ade80" class="card"/>
+    <text x="86" y="480" class="name">JavaScript</text>
+    <text x="240" y="480" class="list">Node 26 LTS and npm 12</text>
+    <text x="1194" y="480" class="size" fill="#86efac">224 MB</text>
+
+    <!-- Python -->
+    <rect x="60" y="510" width="1160" height="58" rx="12" fill="#164e63" fill-opacity="0.55" stroke="#22d3ee" class="card"/>
+    <text x="86" y="546" class="name">Python</text>
+    <text x="240" y="546" class="list">3.14 by default, plus 3.13, 3.12 and 3.11: pick one with a single command</text>
+    <text x="1194" y="546" class="size" fill="#67e8f9">330 MB</text>
+
+    <!-- System -->
+    <rect x="60" y="576" width="1160" height="72" rx="12" fill="#334155" fill-opacity="0.5" stroke="#94a3b8" class="card"/>
+    <text x="86" y="605" class="name">System packages</text>
+    <text x="86" y="630" class="list mono" style="font-size:14px">psql  mysql  valkey-cli  kcat  sqlite3  git  curl  jq  dig  socat  tmux  zsh  ripgrep  fd  bat  htop  nano  vim</text>
+    <text x="1194" y="620" class="size" fill="#cbd5e1">342 MB</text>
+
+    <!-- Base -->
+    <rect x="60" y="656" width="1160" height="50" rx="12" fill="#1e293b" stroke="#475569"/>
+    <text x="86" y="688" class="name">Ubuntu 26.04 LTS</text>
+    <text x="1194" y="688" class="size" fill="#cbd5e1">102 MB</text>
+  </g>
+
+  <text x="1220" y="736" text-anchor="end" class="sans" font-size="16" font-weight="600" fill="#e2e8f0">Toolbox total: 0.87 GB to download, 2.59 GB on disk</text>
+</svg>

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 420" width="1280" height="420" role="img" aria-label="toolbox: one base image with every tool your team reaches for">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="0.6" stop-color="#101a30"/>
+      <stop offset="1" stop-color="#16213f"/>
+    </linearGradient>
+    <linearGradient id="word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#a5b4fc"/>
+    </linearGradient>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" fill="none" stroke="#ffffff" stroke-opacity="0.035"/>
+    </pattern>
+    <radialGradient id="glow" cx="0.78" cy="0.3" r="0.6">
+      <stop offset="0" stop-color="#6366f1" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="420" rx="22" fill="url(#bg)"/>
+  <rect width="1280" height="420" rx="22" fill="url(#grid)"/>
+  <rect width="1280" height="420" rx="22" fill="url(#glow)"/>
+
+  <text x="64" y="138" class="mono" font-size="76" font-weight="700" fill="url(#word)">toolbox</text>
+  <text x="66" y="192" class="sans" font-size="29" font-weight="600" fill="#f1f5f9">One base image.</text>
+  <text x="66" y="230" class="sans" font-size="29" font-weight="600" fill="#f1f5f9">Every tool your team reaches for.</text>
+  <text x="66" y="272" class="sans" font-size="17" fill="#94a3b8">Ubuntu 26.04  ·  Python 3.11–3.14  ·  Node 26  ·  Kubernetes and OpenShift</text>
+  <text x="66" y="298" class="sans" font-size="17" fill="#94a3b8">Database and network clients  ·  A browser terminal</text>
+
+  <g class="sans" font-size="14" font-weight="600">
+    <g transform="translate(66 330)">
+      <rect width="118" height="32" rx="16" fill="#0f766e" fill-opacity="0.3" stroke="#2dd4bf" stroke-opacity="0.55"/>
+      <text x="59" y="21" text-anchor="middle" fill="#99f6e4">Arbitrary UID</text>
+    </g>
+    <g transform="translate(194 330)">
+      <rect width="136" height="32" rx="16" fill="#0f766e" fill-opacity="0.3" stroke="#2dd4bf" stroke-opacity="0.55"/>
+      <text x="68" y="21" text-anchor="middle" fill="#99f6e4">Read-only root</text>
+    </g>
+    <g transform="translate(340 330)">
+      <rect width="150" height="32" rx="16" fill="#3730a3" fill-opacity="0.35" stroke="#818cf8" stroke-opacity="0.6"/>
+      <text x="75" y="21" text-anchor="middle" fill="#c7d2fe">Checksum-pinned</text>
+    </g>
+    <g transform="translate(500 330)">
+      <rect width="108" height="32" rx="16" fill="#3730a3" fill-opacity="0.35" stroke="#818cf8" stroke-opacity="0.6"/>
+      <text x="54" y="21" text-anchor="middle" fill="#c7d2fe">CVE-gated</text>
+    </g>
+  </g>
+
+  <g transform="translate(700 62)">
+    <rect width="516" height="296" rx="14" fill="#0a0f1a" stroke="#334155"/>
+    <path d="M0 14a14 14 0 0 1 14-14h488a14 14 0 0 1 14 14v26H0z" fill="#1e293b"/>
+    <circle cx="24" cy="20" r="6" fill="#f87171"/>
+    <circle cx="44" cy="20" r="6" fill="#fbbf24"/>
+    <circle cx="64" cy="20" r="6" fill="#34d399"/>
+    <g class="mono" font-size="15" xml:space="preserve">
+      <text x="22" y="76" fill="#64748b">$ <tspan fill="#e2e8f0">docker run --rm -it smtoznc/toolbox</tspan></text>
+      <text x="22" y="110"><tspan fill="#22d3ee">[toolbox]</tspan><tspan fill="#94a3b8"> /workspace $ </tspan><tspan fill="#e2e8f0">python --version</tspan></text>
+      <text x="22" y="134" fill="#a7f3d0">Python 3.14.10</text>
+      <text x="22" y="168"><tspan fill="#22d3ee">[toolbox]</tspan><tspan fill="#94a3b8"> /workspace $ </tspan><tspan fill="#e2e8f0">oc version --client | head -1</tspan></text>
+      <text x="22" y="192" fill="#a7f3d0">Client Version: v4.16.0-secure.2</text>
+      <text x="22" y="226"><tspan fill="#22d3ee">[toolbox]</tspan><tspan fill="#94a3b8"> /workspace $ </tspan><tspan fill="#e2e8f0">toolbox-doctor</tspan></text>
+      <text x="22" y="250" fill="#a7f3d0">toolbox-doctor: 90 passed, 0 failed, 0 skipped</text>
+      <rect x="22" y="264" width="9" height="17" fill="#e2e8f0"/>
+    </g>
+  </g>
+</svg>

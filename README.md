@@ -3,13 +3,13 @@
 </p>
 
 <p align="center">
-  <a href="https://hub.docker.com/r/smtoznc/toolbox"><img alt="Docker Hub version" src="https://img.shields.io/docker/v/smtoznc/toolbox?sort=date&logo=docker&logoColor=white&label=docker%20hub&color=2496ED"></a>
-  <a href="https://hub.docker.com/r/smtoznc/toolbox"><img alt="Image size" src="https://img.shields.io/docker/image-size/smtoznc/toolbox/latest?label=download"></a>
+  <a href="https://hub.docker.com/r/smtoznc/toolbox"><img alt="Docker Hub: smtoznc/toolbox" src="https://img.shields.io/badge/docker%20hub-smtoznc%2Ftoolbox-2496ED?logo=docker&logoColor=white"></a>
+  <img alt="Download size 0.87 GB" src="https://img.shields.io/badge/download-0.87%20GB-informational">
   <img alt="Platform" src="https://img.shields.io/badge/platform-linux%2Famd64-informational">
   <img alt="Ubuntu 26.04" src="https://img.shields.io/badge/ubuntu-26.04-E95420?logo=ubuntu&logoColor=white">
   <img alt="Python 3.11 to 3.14" src="https://img.shields.io/badge/python-3.11--3.14-3776AB?logo=python&logoColor=white">
   <img alt="CVE gate enforced" src="https://img.shields.io/badge/CVE%20gate-enforced-2ea44f">
-  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/ozncv2/toolbox"></a>
+  <a href="LICENSE"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue"></a>
 </p>
 
 <h3 align="center">Stop rewriting the same Dockerfile.</h3>
@@ -27,7 +27,7 @@ CMD ["python", "/opt/app/main.py"]
 
 ## ✨ Why toolbox
 
-| | |
+| What you get | Why it matters |
 |---|---|
 | 🧰 **Batteries included** | Four Python versions, Node, Kubernetes and OpenShift CLIs, database clients and network diagnostics, ready on the first line. |
 | 🛡️ **At home on restricted platforms** | Runs as any arbitrary UID, on a read-only root filesystem, with every capability dropped. HOME and a user name are handled for you. |

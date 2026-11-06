@@ -1,0 +1,26 @@
+# Interactive bash defaults, sourced from /etc/bash.bashrc.
+[[ $- == *i* ]] || return 0
+
+if [[ -r /usr/share/bash-completion/bash_completion ]] && ! shopt -oq posix; then
+    . /usr/share/bash-completion/bash_completion
+fi
+
+alias ls='ls --color=auto'
+alias ll='ls -alF --color=auto'
+alias grep='grep --color=auto'
+alias k=kubectl
+if [[ -r /usr/share/bash-completion/completions/kubectl ]]; then
+    . /usr/share/bash-completion/completions/kubectl
+    complete -o default -F __start_kubectl k
+fi
+
+# The label reaches PS1, which bash expands, so only plain name characters are kept.
+__toolbox_label=${TOOLBOX_ENV_LABEL:-toolbox}
+__toolbox_label=${__toolbox_label//[^A-Za-z0-9._-]/}
+case "${TOOLBOX_ENV_TONE:-neutral}" in
+danger) __toolbox_color=31 ;;
+warning) __toolbox_color=33 ;;
+*) __toolbox_color=36 ;;
+esac
+PS1="\[\e[${__toolbox_color}m\][${__toolbox_label}]\[\e[0m\] \w \\$ "
+unset __toolbox_label __toolbox_color

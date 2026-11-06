@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ label + " - " if label else "" }}{{ title }}</title>
+  <link rel="stylesheet" href="{{ static_url('vendor/xterm.css') }}">
+  <link rel="stylesheet" href="{{ static_url('terminal.css') }}">
+</head>
+<body>
+  <header>
+    <span class="title">{{ title }}</span>
+    {% if label %}<span class="label tone-{{ tone }}">{{ label }}</span>{% end %}
+    <span id="status" class="status" role="status">Connecting</span>
+  </header>
+  <main>
+    <div id="terminal"></div>
+    <form id="search" class="search" hidden>
+      <input id="search-input" type="search" placeholder="Search" aria-label="Search terminal output" autocomplete="off">
+      <button type="button" id="search-previous" aria-label="Previous match">&uarr;</button>
+      <button type="submit" aria-label="Next match">&darr;</button>
+      <button type="button" id="search-close" aria-label="Close search">&times;</button>
+    </form>
+    <div id="ended" class="ended" hidden>
+      <p>Session ended</p>
+      <button type="button" id="reconnect">New session (Enter)</button>
+    </div>
+  </main>
+  <script src="{{ static_url('vendor/xterm.js') }}"></script>
+  <script src="{{ static_url('vendor/addon-fit.js') }}"></script>
+  <script src="{{ static_url('vendor/addon-search.js') }}"></script>
+  <script src="{{ static_url('vendor/addon-web-links.js') }}"></script>
+  <script src="{{ static_url('vendor/addon-unicode11.js') }}"></script>
+  <script src="{{ static_url('terminal.js') }}"></script>
+</body>
+</html>

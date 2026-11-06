@@ -1,0 +1,54 @@
+#!/bin/bash
+# Prepares the environment for whatever UID the container runs as, then runs the command.
+set -euo pipefail
+shopt -s nullglob
+
+uid=$(id -u)
+
+runtime_dir=${TMPDIR:-/tmp}/.toolbox-$uid
+if ! mkdir -p "$runtime_dir" 2>/dev/null; then
+    runtime_dir=
+fi
+
+# Docker sets HOME=/ for a UID missing from /etc/passwd, and a read-only root makes /home unusable.
+if [[ -z ${HOME:-} || $HOME == / || ! -w $HOME ]]; then
+    if [[ -w /home/toolbox ]]; then
+        HOME=/home/toolbox
+    elif [[ -n $runtime_dir ]]; then
+        HOME=$runtime_dir/home
+        mkdir -p "$HOME"
+    fi
+    export HOME
+fi
+# Without a startup file, zsh opens its interactive first-run wizard.
+touch -a "$HOME/.zshrc" 2>/dev/null || true
+
+# Gives an arbitrary UID a user name, which tools such as ssh and git refuse to run without.
+nss_wrapper=/usr/lib/x86_64-linux-gnu/libnss_wrapper.so
+if [[ -n $runtime_dir && -e $nss_wrapper ]] && ! getent passwd "$uid" >/dev/null; then
+    {
+        grep -v '^toolbox:' /etc/passwd
+        printf 'toolbox:x:%s:%s:toolbox:%s:/bin/bash\n' "$uid" "$(id -g)" "$HOME"
+    } >"$runtime_dir/passwd"
+    export NSS_WRAPPER_PASSWD=$runtime_dir/passwd NSS_WRAPPER_GROUP=/etc/group
+    export LD_PRELOAD=$nss_wrapper${LD_PRELOAD:+ $LD_PRELOAD}
+fi
+
+# Certificates mounted at run time, for deployments that cannot rebuild with toolbox-add-ca.
+extra_certificates=(/etc/toolbox/ca.d/*.crt /etc/toolbox/ca.d/*.pem)
+if ((${#extra_certificates[@]})) && [[ -n $runtime_dir ]]; then
+    cat /etc/ssl/certs/ca-certificates.crt "${extra_certificates[@]}" >"$runtime_dir/ca-bundle.crt"
+    export SSL_CERT_FILE=$runtime_dir/ca-bundle.crt
+    export REQUESTS_CA_BUNDLE=$SSL_CERT_FILE NODE_EXTRA_CA_CERTS=$SSL_CERT_FILE PIP_CERT=$SSL_CERT_FILE
+fi
+
+# Sourced, so that derived images can extend the environment.
+for hook in /opt/toolbox/entrypoint.d/*.sh; do
+    # shellcheck disable=SC1090
+    . "$hook"
+done
+
+if (($# == 0)); then
+    set -- /bin/bash
+fi
+exec "$@"

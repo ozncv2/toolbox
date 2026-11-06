@@ -1,0 +1,40 @@
+#!/bin/bash
+# Checks that every tool in the image runs for the current user. Exits non-zero on any failure.
+# Usage: toolbox-doctor [-v]
+set -uo pipefail
+
+verbose=0
+[[ "${1:-}" == -v ]] && verbose=1
+
+passed=0
+failed=0
+skipped=0
+
+excluded=,$(python3 -c 'import json; print(",".join(json.load(open("/opt/toolbox/share/manifest.json"))["excluded"]))'),
+
+run_check() {
+    local label=$1 command=$2 output
+    if output=$(timeout 180 bash -c "$command" 2>&1 </dev/null); then
+        passed=$((passed + 1))
+        if ((verbose)); then
+            printf 'ok    %-24s %s\n' "$label" "$(printf '%s' "$output" | head -n 1 | cut -c1-70)"
+        fi
+    else
+        failed=$((failed + 1))
+        printf 'FAIL  %-24s %s\n' "$label" "$command"
+        printf '%s\n' "$output" | tail -n 3 | sed 's/^/      /'
+    fi
+}
+
+while IFS=$'\t' read -r key command; do
+    [[ -z "$key" || "$key" == \#* ]] && continue
+    if [[ "$excluded" == *",$key,"* ]]; then
+        skipped=$((skipped + 1))
+        continue
+    fi
+    run_check "$key" "$command"
+done </opt/toolbox/share/doctor-checks.tsv
+
+printf 'toolbox-doctor: %d passed, %d failed, %d skipped (uid=%s home=%s)\n' \
+    "$passed" "$failed" "$skipped" "$(id -u)" "${HOME:-}"
+((failed == 0))

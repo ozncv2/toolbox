@@ -1,0 +1,22 @@
+# Interactive zsh defaults, sourced from /etc/zsh/zshrc.
+[[ -o interactive ]] || return 0
+
+alias ls='ls --color=auto'
+alias ll='ls -alF --color=auto'
+alias grep='grep --color=auto'
+alias k=kubectl
+
+autoload -Uz compinit bashcompinit
+compinit -C -d "${TMPDIR:-/tmp}/.zcompdump-$UID"
+bashcompinit
+
+# The label reaches the prompt, which zsh expands, so only plain name characters are kept.
+__toolbox_label=${TOOLBOX_ENV_LABEL:-toolbox}
+__toolbox_label=${__toolbox_label//[^A-Za-z0-9._-]/}
+case "${TOOLBOX_ENV_TONE:-neutral}" in
+danger) __toolbox_color=red ;;
+warning) __toolbox_color=yellow ;;
+*) __toolbox_color=cyan ;;
+esac
+PROMPT="%F{${__toolbox_color}}[${__toolbox_label}]%f %~ %# "
+unset __toolbox_label __toolbox_color

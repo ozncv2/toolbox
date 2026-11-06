@@ -1,0 +1,51 @@
+#!/bin/bash
+# Lists the installed Python versions or selects the one behind python, python3 and pip.
+set -euo pipefail
+shopt -s nullglob
+
+versions() {
+    local dir
+    for dir in /opt/python/3.*; do
+        printf '%s\n' "${dir##*/}"
+    done
+}
+
+usage() {
+    echo "usage: toolbox-python list | current | use <version>" >&2
+    exit 2
+}
+
+case "${1:-}" in
+list)
+    current=$(readlink /opt/python/current)
+    while read -r version; do
+        if [[ "$version" == "$current" ]]; then
+            printf '* %s\n' "$version"
+        else
+            printf '  %s\n' "$version"
+        fi
+    done < <(versions)
+    ;;
+current)
+    readlink /opt/python/current
+    ;;
+use)
+    target=${2:-}
+    [[ -n "$target" ]] || usage
+    if [[ ! -d "/opt/python/$target" ]]; then
+        echo "toolbox-python: $target is not installed; available: $(versions | tr '\n' ' ')" >&2
+        exit 1
+    fi
+    if [[ $(id -u) != 0 ]]; then
+        echo "toolbox-python: 'use' changes the image, so run it as root in a Dockerfile" >&2
+        exit 1
+    fi
+    ln -sfn "$target" /opt/python/current
+    # Only the default version ships with bytecode. At run time the UID usually cannot write it.
+    python3 -m compileall -q "$(python3 -c 'import sysconfig; print(sysconfig.get_path("stdlib"))')" >/dev/null || true
+    python3 --version
+    ;;
+*)
+    usage
+    ;;
+esac

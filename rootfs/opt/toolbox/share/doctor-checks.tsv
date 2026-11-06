@@ -1,0 +1,91 @@
+# key (tools.lock name or apt package, used to skip excluded tools)	command
+environment	[ "$(id -u)" != 0 ]
+environment	touch "$HOME/.toolbox-doctor" && rm "$HOME/.toolbox-doctor"
+environment	touch "${TMPDIR:-/tmp}/.toolbox-doctor" && rm "${TMPDIR:-/tmp}/.toolbox-doctor"
+environment	[ -n "$(id -un)" ]
+environment	[ ! -e /opt/python/3.15 ]
+locales	locale -a | grep -qi '^tr_TR.utf8$'
+environment	infocmp xterm-256color
+python	[ "$(toolbox-python current)" = 3.14 ]
+python	python --version
+python	python3 -c 'import bz2, ctypes, lzma, readline, sqlite3, ssl, uuid, venv, zlib'
+python	pip --version
+python	python3.14 --version
+python	python3.13 --version
+python	python3.12 --version
+python	python3.11 --version
+terminal	/opt/toolbox/venv/bin/python -c 'import ptyprocess, terminado, tornado'
+terminal	test -s /opt/toolbox/terminal/static/vendor/xterm.js
+uv	uv --version
+uv	uv python find 3.12
+dumb-init	dumb-init --version
+curl	curl --version
+wget	wget --version
+jq	jq --version
+git	git --version
+git-lfs	git lfs version
+less	less --version
+nano	nano --version
+vim-tiny	vim --version
+zip	zip -v
+unzip	unzip -v
+xz-utils	xz --version
+zstd	zstd --version
+openssl	openssl version
+procps	ps --version
+file	file --version
+gettext-base	envsubst --version
+libnss-wrapper	test -e /usr/lib/x86_64-linux-gnu/libnss_wrapper.so
+zsh	zsh --version
+tmux	tmux -V
+fzf	fzf --version
+ripgrep	rg --version
+fd-find	fd --version
+bat	bat --version
+htop	htop --version
+ncdu	ncdu --version
+tree	tree --version
+rsync	rsync --version
+parallel	parallel --version
+oc	oc version --client
+oc	kubectl version --client
+helm	helm version --short
+kustomize	kustomize version
+k9s	k9s version --short
+stern	stern --version
+kubectx	kubectx --version
+kubens	kubens --version
+argocd	argocd version --client --short
+kubeconform	kubeconform -v
+skopeo	skopeo --version
+crane	crane version
+oras	oras version
+cosign	cosign version
+dive	dive --version
+bind9-dnsutils	dig -v
+iproute2	ip -V
+traceroute	traceroute --version
+mtr-tiny	mtr --version
+socat	socat -V
+netcat-openbsd	command -v nc
+grpcurl	grpcurl --version
+websocat	websocat --version
+xh	xh --version
+yq	yq --version
+miller	mlr --version
+sqlite3	sqlite3 --version
+duckdb	duckdb --version
+xmlstarlet	xmlstarlet --version
+rclone	rclone version
+postgresql-client	psql --version
+postgresql-client	pg_dump --version
+mysql-client	mysql --version
+mysql-client	mysqldump --version
+valkey-tools	valkey-cli --version
+mongosh	mongosh --version
+mongodb-database-tools	mongodump --version
+mongodb-database-tools	mongorestore --version
+kcat	kcat -V
+node	node --version
+node	npm --version
+gh	gh --version

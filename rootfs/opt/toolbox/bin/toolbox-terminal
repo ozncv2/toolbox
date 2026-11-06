@@ -1,0 +1,3 @@
+#!/bin/bash
+# Starts the browser terminal. See README.md for its TOOLBOX_TERMINAL_* settings.
+exec /opt/toolbox/venv/bin/python /opt/toolbox/terminal/server.py "$@"

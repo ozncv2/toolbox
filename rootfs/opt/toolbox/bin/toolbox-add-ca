@@ -1,0 +1,23 @@
+#!/bin/bash
+# Trusts extra CA certificates in a derived image. Run as root in a Dockerfile.
+# Usage: toolbox-add-ca <certificate> [...]
+#
+# curl, git and the system libraries read the system bundle directly. Python, pip, uv and
+# Node are pointed at the same bundle by the image's environment variables.
+set -euo pipefail
+
+if [[ $(id -u) != 0 ]]; then
+    echo "toolbox-add-ca: run this as root in a Dockerfile" >&2
+    exit 1
+fi
+if (($# == 0)); then
+    echo "usage: toolbox-add-ca <certificate> [...]" >&2
+    exit 2
+fi
+
+for certificate in "$@"; do
+    openssl x509 -in "$certificate" -noout
+    name=$(basename "$certificate")
+    install -m 0644 "$certificate" "/usr/local/share/ca-certificates/${name%.*}.crt"
+done
+update-ca-certificates

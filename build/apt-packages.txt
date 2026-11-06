@@ -1,0 +1,52 @@
+# Base: the image's own scripts rely on these.
+ca-certificates
+dumb-init
+libnss-wrapper
+locales
+bash-completion
+
+# General
+curl
+wget
+jq
+git
+less
+nano
+vim-tiny
+zip
+unzip
+xz-utils
+zstd
+openssl
+procps
+file
+gettext-base
+
+# Shell
+zsh
+tmux
+ripgrep
+fd-find
+bat
+htop
+ncdu
+tree
+parallel
+
+# Network
+bind9-dnsutils
+iproute2
+traceroute
+mtr-tiny
+socat
+netcat-openbsd
+
+# Data
+sqlite3
+xmlstarlet
+
+# Database clients
+postgresql-client
+mysql-client
+valkey-tools
+kcat

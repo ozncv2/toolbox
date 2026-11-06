@@ -1,0 +1,42 @@
+name: build
+
+# Runs only when started by hand. Rebuilding also picks up the latest Ubuntu security updates.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      # Publishing needs the DOCKERHUB_USERNAME and DOCKERHUB_TOKEN repository secrets.
+      PUBLISH: ${{ secrets.DOCKERHUB_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Free disk space
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Build
+        run: VERSION=ci docker buildx bake default
+
+      - name: Test
+        run: tests/smoke.sh smtoznc/toolbox:ci
+
+      - name: Scan for critical vulnerabilities
+        run: scripts/scan.sh smtoznc/toolbox:ci
+
+      - uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
+        if: env.PUBLISH == 'true'
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Publish
+        if: env.PUBLISH == 'true'
+        run: VERSION=$(date -u +%Y.%m.%d) docker buildx bake release

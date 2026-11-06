@@ -1,0 +1,21 @@
+# Go tools built from source, because the upstream release binaries embed Go versions or
+# dependencies with critical vulnerabilities. See scripts/cve_gate.py.
+#
+# bumps    comma-separated module@version upgrades on top of the upstream go.mod
+# ldflags  the rest of the line; {version} and {commit} are substituted
+#
+# kind name version commit repo subdir package bumps tags ldflags
+go oc v4.16.0-secure.2 6f88b5846ab96ac1808c20038646d4dd669395cb https://github.com/openshift/oc.git . ./cmd/oc github.com/go-git/go-git/v5@v5.19.3,github.com/docker/docker@v28.5.2+incompatible,github.com/moby/buildkit@v0.34.2,github.com/containerd/containerd@v1.7.36,github.com/containers/storage@v1.59.1,github.com/containers/image/v5@v5.36.2,github.com/opencontainers/runc=github.com/opencontainers/runc@v1.2.9,github.com/moby/go-archive=github.com/moby/go-archive@v0.1.0 include_gcs,include_oss,containers_image_openpgp -X github.com/openshift/oc/pkg/version.versionFromGit={version} -X github.com/openshift/oc/pkg/version.commitFromGit={commit} -X github.com/openshift/oc/pkg/version.gitTreeState=modified -X k8s.io/component-base/version.gitMajor=1 -X k8s.io/component-base/version.gitMinor=29 -X k8s.io/component-base/version.gitVersion=v1.29.7 -X k8s.io/component-base/version.gitCommit={commit} -X k8s.io/component-base/version.gitTreeState=modified
+go k9s v0.51.0 558caafe7ba067467de46b320cc22ef11fef9c34 https://github.com/derailed/k9s.git . . helm.sh/helm/v3@v3.22.1,github.com/containerd/containerd/v2@v2.2.10,github.com/andybalholm/brotli@v1.2.8 - -X github.com/derailed/k9s/cmd.version={version} -X github.com/derailed/k9s/cmd.commit={commit}
+go stern v1.35.0 37fcd4cfc29f61dcd1cdfdb68de8a75e8b33c5fe https://github.com/stern/stern.git . . - - -X github.com/stern/stern/cmd.version={version} -X github.com/stern/stern/cmd.commit={commit}
+go kubectx v0.11.0 7605ca50c42eab0937bd3d4de825e0bcd120ba1f https://github.com/ahmetb/kubectx.git . ./cmd/kubectx - - -X main.version={version}
+go kubens v0.11.0 7605ca50c42eab0937bd3d4de825e0bcd120ba1f https://github.com/ahmetb/kubectx.git . ./cmd/kubens - - -X main.version={version}
+go kustomize v5.8.3 6e4452f7b136fb9a261afe60830867a875183a71 https://github.com/kubernetes-sigs/kustomize.git kustomize . - - -X sigs.k8s.io/kustomize/api/provenance.version=kustomize/{version} -X sigs.k8s.io/kustomize/api/provenance.gitCommit={commit}
+go kubeconform v0.8.0 02374e583d700721f57300fae78e11acd27ee539 https://github.com/yannh/kubeconform.git . ./cmd/kubeconform - - -X main.version={version}
+go crane v0.22.1 8a72a424fdecb4caa14f2d525e5d2503331442b5 https://github.com/google/go-containerregistry.git . ./cmd/crane - - -X github.com/google/go-containerregistry/cmd/crane/cmd.Version={version}
+go dive v0.13.1 fe98c8a2eb08c443a36e3cc7568078909e298433 https://github.com/wagoodman/dive.git . . - - -X main.version={version} -X main.commit={commit}
+go git-lfs v3.8.1 a662a6dbfedf706cfa9fc7a5b7bcc7ba2e2c8a65 https://github.com/git-lfs/git-lfs.git . . - - -X github.com/git-lfs/git-lfs/v3/config.GitCommit={commit}
+go grpcurl v1.9.4 cf21d4aca5e9b69c06ecfa42d78e9fb942b980e8 https://github.com/fullstorydev/grpcurl.git . ./cmd/grpcurl - - -X main.version={version}
+go miller v6.22.0:mlr 1362c2ec03f319da56f7defebb3caac74c97445e https://github.com/johnkerl/miller.git . ./cmd/mlr - -
+go rclone v1.75.2 be8d6044eacb843b74d335db0c5fbe09222031fe https://github.com/rclone/rclone.git . . github.com/andybalholm/brotli@v1.2.8 - -X github.com/rclone/rclone/fs.Version={version}
+go skopeo v1.24.1 77f3d92f861271c7cb9175afcf876017bcae9202 https://github.com/containers/skopeo.git . ./cmd/skopeo - containers_image_openpgp,containers_image_docker_daemon_stub,exclude_graphdriver_btrfs

@@ -10,6 +10,7 @@
   <img alt="Python 3.11 to 3.14" src="https://img.shields.io/badge/python-3.11--3.14-3776AB?logo=python&logoColor=white">
   <img alt="CVE gate enforced" src="https://img.shields.io/badge/CVE%20gate-enforced-2ea44f">
   <a href="LICENSE"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue"></a>
+  <a href="https://www.linkedin.com/in/samet-ozenc/"><img alt="Samet Özenç on LinkedIn" src="https://img.shields.io/badge/maintainer-Samet%20%C3%96zen%C3%A7-0A66C2"></a>
 </p>
 
 <h3 align="center">Stop rewriting the same Dockerfile.</h3>
@@ -220,6 +221,10 @@ when you want newer tools.
 - **`linux/amd64` only** for now.
 - **No C compiler.** To build native code, install `build-essential` in a builder stage of your own image and copy out the result.
 - **`oc` is an unofficial build:** OpenShift's 4.16 source with newer dependencies, not a Red Hat release. Test it against your own cluster before relying on it.
+
+## 👋 About the maintainer
+
+Built and maintained by **Samet Özenç**, a Machine Learning Engineer in Istanbul working on MLOps, AI architecture and Kubernetes. Questions, ideas and feedback are always welcome: [connect on LinkedIn](https://www.linkedin.com/in/samet-ozenc/).
 
 ## 📄 License
 

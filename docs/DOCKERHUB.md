@@ -10,7 +10,7 @@ COPY app/ /opt/app/
 CMD ["python", "/opt/app/main.py"]
 ```
 
-**Source, docs and issues:** [github.com/ozncv2/toolbox](https://github.com/ozncv2/toolbox)
+**Source, docs and issues:** [github.com/ozncv2/toolbox](https://github.com/ozncv2/toolbox) · **Maintainer:** [Samet Özenç](https://www.linkedin.com/in/samet-ozenc/)
 
 ## ✨ Why toolbox
 
@@ -122,6 +122,10 @@ This table is a snapshot, not a promise. Scanner databases change daily, other s
 - **`linux/amd64` only** for now.
 - **No C compiler.** To build native code, install `build-essential` in a builder stage of your own image and copy out the result.
 - **`oc` is an unofficial build:** OpenShift's 4.16 source with newer dependencies, not a Red Hat release. Test it against your own cluster before relying on it.
+
+## 👋 About the maintainer
+
+Built and maintained by **Samet Özenç**, a Machine Learning Engineer in Istanbul working on MLOps, AI architecture and Kubernetes. Questions, ideas and feedback are always welcome: [connect on LinkedIn](https://www.linkedin.com/in/samet-ozenc/).
 
 ## 📄 License
 

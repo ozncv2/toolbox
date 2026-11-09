@@ -34,3 +34,8 @@ ln -sfn "$default_minor" /opt/python/current
 uv venv --python "/opt/python/$default_minor/bin/python3" /opt/toolbox/venv
 uv pip install --python /opt/toolbox/venv/bin/python --require-hashes --no-compile \
     --requirement /build/terminal-requirements.txt
+
+# Tornado ships its own test suite, including a private key for its TLS tests. The terminal never
+# imports it, and image scanners report every private key they find. Removed here, in the stage that
+# produces the venv, so the key never reaches a layer of the final image.
+rm -rf "/opt/toolbox/venv/lib/python$default_minor/site-packages/tornado/test"

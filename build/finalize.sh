@@ -57,3 +57,13 @@ python3 /build/write-manifest.py /opt/toolbox/share/manifest.json /build/tools.l
 chmod -R a+rX /opt
 find / -xdev -type f -perm /6000 -exec chmod a-s {} + 2>/dev/null || true
 rm -rf /root/.cache /root/.config /root/.local /tmp/* /var/tmp/*
+
+# Image scanners reject an image that contains a private key, even one from a package's test fixtures.
+# Fails here so the file is removed where it is installed; deleting it in this layer would leave it in
+# the layer below. Only text files are read: compiled programs are left to the scanners.
+private_keys=$(find / -xdev -type f -print0 |
+    xargs -0 grep -lIE '^-----BEGIN ([A-Z0-9]+ )*PRIVATE KEY( BLOCK)?-----[[:space:]]*$' 2>/dev/null || true)
+if [[ -n "$private_keys" ]]; then
+    printf 'Private keys found in the image:\n%s\n' "$private_keys" >&2
+    exit 1
+fi

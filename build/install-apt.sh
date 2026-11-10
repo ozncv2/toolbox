@@ -35,4 +35,6 @@ locale-gen
 rm -rf /usr/share/i18n/charmaps /usr/share/i18n/locales
 
 mv /tmp/docker-clean /etc/apt/apt.conf.d/docker-clean
-rm -rf /var/log/apt /var/log/dpkg.log /var/log/alternatives.log /var/cache/debconf/*-old /var/lib/dpkg/*-old
+# docker-clean was away while apt ran, so the package caches it normally deletes are still here (~100 MB).
+rm -rf /var/cache/apt/*.bin \
+    /var/log/apt /var/log/dpkg.log /var/log/alternatives.log /var/cache/debconf/*-old /var/lib/dpkg/*-old

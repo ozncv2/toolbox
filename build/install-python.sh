@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-versions=(3.14.10 3.13.18 3.12.16 3.11.18)
+all_versions=(3.14.10 3.13.18 3.12.16 3.11.18)
 default_minor=3.14
+
+# The other versions can be left out by name (python3.13, ...). The default one stays: it runs the terminal.
+versions=()
+for version in "${all_versions[@]}"; do
+    minor=${version%.*}
+    if [[ "$minor" == "$default_minor" || ",${TOOLBOX_EXCLUDE:-}," != *",python$minor,"* ]]; then
+        versions+=("$version")
+    fi
+done
 
 export UV_PYTHON_INSTALL_DIR=/opt/python
 uv python install --no-bin "${versions[@]}"

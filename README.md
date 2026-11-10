@@ -80,6 +80,17 @@ docker run --rm -p 127.0.0.1:8888:8888 -e TOOLBOX_TERMINAL_BIND=0.0.0.0 smtoznc/
 
 Exact versions of every tool and package are recorded in `/opt/toolbox/share/manifest.json`.
 
+### 🪶 Lite variant
+
+`smtoznc/toolbox:<version>-lite`, and the moving `lite` tag, keep the Kubernetes and OpenShift clients
+(`oc`, `kubectl`, `helm`, `kustomize`, `k9s`, `stern`, `kubectx`, `kubens`, `kubeconform`), `skopeo`, `yq`,
+`fzf`, every Ubuntu package above, and Python 3.14 with the browser terminal. They leave out Python 3.11 to 3.13,
+Node and `npm`, `argocd`, `cosign`, `oras`, `crane`, `dive`, `rclone`, `duckdb`, `mongosh`, the MongoDB database
+tools, `gh`, `git-lfs`, `grpcurl`, `websocat`, `xh` and `mlr`. That makes the image about a third of the size on
+disk, with fewer files to pull and scan.
+
+The list is `LITE_EXCLUDE` in `docker-bake.hcl`, and `toolbox-doctor` skips the checks for whatever it leaves out.
+
 ## 🧩 Build on it
 
 A real project image stays this short:
@@ -202,11 +213,18 @@ tests/smoke.sh smtoznc/toolbox:dev
 scripts/scan.sh smtoznc/toolbox:dev
 ```
 
-Leave out what you don't need by name, from `build/tools.lock`, `build/go-tools.lock` or `build/apt-packages.txt`.
-Keep the base packages at the top of `build/apt-packages.txt`.
+Leave out what you don't need by name, from `build/tools.lock`, `build/go-tools.lock` or `build/apt-packages.txt`,
+or a Python other than 3.14 as `python3.13`, `python3.12` or `python3.11`. Keep the base packages at the top of
+`build/apt-packages.txt`.
 
 ```bash
 VERSION=dev docker buildx bake --builder toolbox --set '*.args.TOOLBOX_EXCLUDE=k9s,duckdb' default
+```
+
+The lite variant is its own target, tagged `<version>-lite`:
+
+```bash
+VERSION=dev docker buildx bake --builder toolbox lite
 ```
 
 Downloads and Go builds run natively, so only the apt, Python and rsync steps are emulated on an arm64 machine.

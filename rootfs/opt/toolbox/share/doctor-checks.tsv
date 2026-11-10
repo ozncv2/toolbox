@@ -1,4 +1,4 @@
-# key (tools.lock name or apt package, used to skip excluded tools)	command
+# key (tools.lock name, apt package or python3.NN, used to skip excluded tools)	command
 environment	[ "$(id -u)" != 0 ]
 environment	touch "$HOME/.toolbox-doctor" && rm "$HOME/.toolbox-doctor"
 environment	touch "${TMPDIR:-/tmp}/.toolbox-doctor" && rm "${TMPDIR:-/tmp}/.toolbox-doctor"
@@ -11,13 +11,13 @@ python	python --version
 python	python3 -c 'import bz2, ctypes, lzma, readline, sqlite3, ssl, uuid, venv, zlib'
 python	pip --version
 python	python3.14 --version
-python	python3.13 --version
-python	python3.12 --version
-python	python3.11 --version
+python3.13	python3.13 --version
+python3.12	python3.12 --version
+python3.11	python3.11 --version
 terminal	/opt/toolbox/venv/bin/python -c 'import ptyprocess, terminado, tornado'
 terminal	test -s /opt/toolbox/terminal/static/vendor/xterm.js
 uv	uv --version
-uv	uv python find 3.12
+uv	uv python find 3.14
 dumb-init	dumb-init --version
 curl	curl --version
 wget	wget --version

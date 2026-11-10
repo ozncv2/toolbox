@@ -48,9 +48,13 @@ On Apple Silicon, add `--platform linux/amd64`. The image is `linux/amd64` only.
 
 | Tag | Digest |
 |---|---|
-| `2026.11.06`, `latest` | `sha256:98efe3289fca77f985ce08acba725bbacf14719e8de416e4240a7ebd8f5f1431` |
+| `2026.11.09`, `latest` | `sha256:4e274c8d0ef7c51c70ffa0b3e9cd1ab1262bb2d108eb09e1e46471f9b75c1790` |
+| `2026.11.10-lite`, `lite` | `sha256:3418beec2461be30359e98750aa00cf1a58638083d91534b5a1ef46d2126daba` |
+| `2026.11.06` | `sha256:98efe3289fca77f985ce08acba725bbacf14719e8de416e4240a7ebd8f5f1431` |
 
-Pin a dated tag or a digest in production. `latest` moves with every release.
+Pin a dated tag or a digest in production. `latest` and `lite` move with every release. The lite variant keeps the
+Kubernetes and OpenShift clients, the shell, network and database clients from Ubuntu, and Python 3.14 with the
+browser terminal, at about a third of the size. See the README for what it leaves out.
 
 ## 📦 What's inside
 

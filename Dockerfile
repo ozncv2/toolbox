@@ -39,6 +39,7 @@ RUN --mount=type=bind,source=build,target=/build \
     /build/install-apt.sh
 
 FROM ${UBUNTU_IMAGE} AS python
+ARG TOOLBOX_EXCLUDE
 COPY --from=fetch /out/bin/uv /usr/local/bin/uv
 RUN --mount=type=bind,source=build,target=/build \
     --mount=type=cache,id=toolbox-uv,target=/root/.cache/uv,sharing=locked \

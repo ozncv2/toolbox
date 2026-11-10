@@ -38,6 +38,13 @@ docker run -d --name "$container" "${restricted[@]}" \
 docker exec -i "$container" /opt/toolbox/venv/bin/python - <"$root/tests/terminal_smoke.py"
 docker rm -f "$container" >/dev/null
 
+# A variant built with TOOLBOX_EXCLUDE is tested with what it still contains.
+excluded=,$(docker run --rm "$image" python3 -c 'import json; print(",".join(json.load(open("/opt/toolbox/share/manifest.json"))["excluded"]))'),
+python=3.12
+[[ "$excluded" == *",python3.12,"* ]] && python=3.14
+npm_step="RUN cd /tmp && npm install --no-audit --no-fund --silent left-pad && rm -rf /tmp/node_modules /tmp/package*.json"
+[[ "$excluded" == *",node,"* ]] && npm_step=""
+
 echo "== derived image: Python selection, pip, uv, npm, extra CA"
 docker build --quiet --platform linux/amd64 -t "$derived" - >/dev/null <<EOF
 FROM $image
@@ -46,14 +53,14 @@ RUN openssl req -x509 -newkey rsa:2048 -nodes -subj /CN=toolbox-smoke-ca -days 1
       -keyout /tmp/key.pem -out /tmp/toolbox-smoke-ca.crt \
     && toolbox-add-ca /tmp/toolbox-smoke-ca.crt \
     && rm /tmp/key.pem /tmp/toolbox-smoke-ca.crt
-RUN toolbox-python use 3.12
+RUN toolbox-python use $python
 RUN pip install six markupsafe
 RUN uv venv /tmp/uv-venv && uv pip install --python /tmp/uv-venv/bin/python six && rm -rf /tmp/uv-venv
-RUN cd /tmp && npm install --no-audit --no-fund --silent left-pad && rm -rf /tmp/node_modules /tmp/package*.json
+$npm_step
 USER 1001:0
 EOF
-docker run --rm "$derived" bash -c '
-    python --version | grep -q "^Python 3\.12\."
+docker run --rm -e EXPECTED_PYTHON="$python" "$derived" bash -c '
+    python --version | grep -qF "Python $EXPECTED_PYTHON."
     python -c "import six, markupsafe._speedups"
     grep -qs . /usr/local/share/ca-certificates/toolbox-smoke-ca.crt
     test -e /etc/ssl/certs/toolbox-smoke-ca.pem'
